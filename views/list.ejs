@@ -1,0 +1,89 @@
+<%- include("header") -%>
+
+<div class="box" id="heading">
+  <h1><%= listTitle %></h1>
+</div>
+
+<div class="box2">
+  <form class="item" action="/" method="post">
+    <div>
+      <input
+        type="text"
+        name="newItem"
+        placeholder="New Task"
+        autocomplete="off"
+      />
+    </div>
+    <div>
+      <input class="date" type="date" name="newDate" placeholder="" />
+    </div>
+    <div class="box" id="categoryDiv">
+      <label for="tasks">Category : </label>
+      <select name="tasks" id="tasks">
+        <option value="Personal">Personal</option>
+        <option value="Work">Work</option>
+        <option value="School">School</option>
+        <option value="Cleaning">Cleaning</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="buttonDiv">
+      <button
+        class="add-button"
+        type="submit"
+        name="list"
+        value="<%= listTitle %>"
+      >
+        +
+      </button>
+    </div>
+  </form>
+</div>
+
+<div class="main">
+  <% newListItems.forEach(function(item){ %>
+  <div class="sub">
+    <form class="" action="/delete" method="post">
+      <div class="item2">
+        <div><p class="text"><%= item.name %></p></div>
+        <div>
+          <p
+            class="text"
+            style="font-weight: 500; padding: 0; padding-left: 20px"
+          >
+            Context : <%= item.context %>
+          </p>
+        </div>
+        <div class="bottom">
+          <!-- <div><p class="date">Due : <%= item.date %></p></div> -->
+          <div>
+            <p class="date">
+              <% if(item.date === "") { %> Due : No Due Date <% } else { %> Due
+              : <%= item.date %> <% } %>
+            </p>
+          </div>
+
+          <div id="delete">
+            <form method="POST" action="/delete">
+              <input type="hidden" name="id" value="<%= item._id %>" />
+              <input type="hidden" name="listName" value="<%= listTitle %>" />
+              <button
+                class="delete-button"
+                style="background-color: none"
+                type="submit"
+              >
+                <i
+                  class="fa-sharp fa-solid fa-trash fa-2xs delete-button"
+                  style="color: #b10b0b"
+                ></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <% }); %>
+</div>
+
+<%- include("footer") -%>
